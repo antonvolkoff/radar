@@ -1,5 +1,8 @@
 {
   "name": "atc",
   "version": "0.0.1",
-  "main": "main.js"
+  "main": "main.js",
+  "dependencies": {
+    "ces": "0.0.4"
+  }
 }

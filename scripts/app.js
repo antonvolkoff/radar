@@ -1,5 +1,5 @@
 var App = {
-  run: function() {
+  start: function() {
     // Get browser dimentions
     var screenWidth = window.innerWidth;
     var screenHeight = window.innerHeight;
