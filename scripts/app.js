@@ -1,3 +1,5 @@
+var fs = require('fs');
+var toml = require('toml');
 var CES = require('ces');
 var PositionComponent = require('./components/position_component');
 var VelocityComponent = require('./components/velocity_component');
@@ -22,13 +24,25 @@ var handleTick = function() {
   _world.update(_stage);
 };
 
-var loadSector = function() {
+var loadSector = function(callback) {
+  fs.readFile('example.toml', function(err, data) {
+    if (err) {
+      console.log(err);
+      return;
+    };
 
+    var parsed = toml.parse(data);
+    callback(parsed);
+  });
 };
 
 var App = {
   start: function() {
     setupCanvas();
+
+    loadSector(function(data) {
+      console.log(data);
+    });
 
     _stage = new createjs.Stage('stage');
     window._stage = _stage;
