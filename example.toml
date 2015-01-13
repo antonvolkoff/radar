@@ -11,14 +11,14 @@ nm_longitude        = 38
 magnetic_variation  = 2.0
 scaling_factor      = 1.0
 
-[[vor]]
+[[vors]]
 code      = "ABB"
 name      = "ABBEVILLE"
 frequency = 108.450
 latitude  = "N050.08.06.500"
 longitude = "E001.51.16.898"
 
-[[vor]]
+[[vors]]
 code      = "AFI"
 name      = "AFFLIGEM"
 frequency = 114.900

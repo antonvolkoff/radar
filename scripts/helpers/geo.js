@@ -1,5 +1,5 @@
 var TILE_SIZE = 256;
-var _pixelOrigin = { x: TILE_SIZE / 2.0, y: TILE_SIZE: 2.0 };
+var _pixelOrigin = { x: TILE_SIZE / 2.0, y: TILE_SIZE / 2.0 };
 var _pixelsPerLonDegree = TILE_SIZE / 360.0;
 var _pixelsPerLonRadian = TILE_SIZE / (2 * Math.PI);
 
@@ -44,6 +44,24 @@ var Geo = {
     var lat = radiansToDegrees(2 * Math.atan(Math.exp(latRadians)) - Math.PI / 2);
 
     return { lat: lat, lng: lng };
+  },
+
+  convertDMSToDD: function(direction, degrees, minutes, seconds) {
+    var dd = degrees + minutes/60 + seconds/(60*60);
+
+    if (direction == "S" || direction == "W") {
+        dd = dd * -1;
+    } // Don't do anything for N or E
+
+    return dd.toFixed(6);
+  },
+
+  parseDMS: function(val) {
+    var direction = val[0];
+    var rest = val.slice(1, val.length);
+    var parts = rest.split('.');
+
+    return this.convertDMSToDD(direction, parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
   }
 };
 

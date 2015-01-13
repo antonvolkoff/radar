@@ -1,5 +1,6 @@
 var fs = require('fs');
 var toml = require('toml');
+var Geo = require('./helpers/geo');
 var CES = require('ces');
 var PositionComponent = require('./components/position_component');
 var VelocityComponent = require('./components/velocity_component');
@@ -41,7 +42,11 @@ var App = {
     setupCanvas();
 
     loadSector(function(data) {
-      console.log(data);
+      data.vors.forEach(function(vor) {
+        var lat = Geo.parseDMS(vor.latitude);
+        var lng = Geo.parseDMS(vor.longitude);
+        console.log(lat, lng);
+      });
     });
 
     _stage = new createjs.Stage('stage');
