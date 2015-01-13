@@ -1,0 +1,26 @@
+# Sample sector file
+
+[info]
+name                = "EBBU"
+default_callsign    = "EBBU_CTR"
+default_wx_station  = "EBBR"
+center_latitude     = "N050.54.05.000"
+center_longitude    = "E004.29.04.000"
+nm_latitude         = 60
+nm_longitude        = 38
+magnetic_variation  = 2.0
+scaling_factor      = 1.0
+
+[[vor]]
+code      = "ABB"
+name      = "ABBEVILLE"
+frequency = 108.450
+latitude  = "N050.08.06.500"
+longitude = "E001.51.16.898"
+
+[[vor]]
+code      = "AFI"
+name      = "AFFLIGEM"
+frequency = 114.900
+latitude  = "N050.54.28.001"
+longitude = "E004.08.20.000"
