@@ -22,6 +22,10 @@ var handleTick = function() {
   _world.update(_stage);
 };
 
+var loadSector = function() {
+
+};
+
 var App = {
   start: function() {
     setupCanvas();

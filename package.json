@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "main.js",
   "dependencies": {
-    "ces": "0.0.4"
+    "ces": "0.0.4",
+    "toml": "^2.1.1"
   }
 }
