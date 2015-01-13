@@ -24,7 +24,7 @@ var Geo = {
 
     point.x = _pixelOrigin.x + lng * _pixelsPerLonDegree;
 
-    var siny = this.bound(Math.sin(degreesToRadians(lat)), -0.9999, 0.9999);
+    var siny = this.bound(Math.sin(this.degreesToRadians(lat)), -0.9999, 0.9999);
     point.y = _pixelOrigin.y + 0.5 * Math.log((1 + siny) / (1 - siny)) *- _pixelsPerLonRadian;
 
     var numTiles = 1 << zoom;
@@ -41,7 +41,7 @@ var Geo = {
 
     var lng = (point.x - _pixelOrigin.x) / _pixelsPerLonDegree;
     var latRadians = (point.y - _pixelOrigin.y) / - _pixelsPerLonRadian;
-    var lat = radiansToDegrees(2 * Math.atan(Math.exp(latRadians)) - Math.PI / 2);
+    var lat = this.radiansToDegrees(2 * Math.atan(Math.exp(latRadians)) - Math.PI / 2);
 
     return { lat: lat, lng: lng };
   },

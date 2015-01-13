@@ -41,46 +41,51 @@ var App = {
   start: function() {
     setupCanvas();
 
+    _stage = new createjs.Stage('stage');
+    
+    _world = new CES.World();
+    _world.addSystem(new PhysicSystem());
+    _world.addSystem(new RenderSystem());
+
     loadSector(function(data) {
       data.vors.forEach(function(vor) {
         var lat = Geo.parseDMS(vor.latitude);
         var lng = Geo.parseDMS(vor.longitude);
-        console.log(lat, lng);
+
+        var point = Geo.fromLatLngToPoint(lat, lng, 2);
+
+        var elem = new CES.Entity();
+        elem.addComponent(new PositionComponent(point.x, point.y));
+        elem.addComponent(new ShapeComponent({
+          type: 'rect',
+          width: 3,
+          height: 3,
+          fillColor: '#f00',
+          strokeColor: '#f00'
+        }, _stage));
+
+        _world.addEntity(elem);
+      });
+
+      data.ndbs.forEach(function(ndb) {
+        var lat = Geo.parseDMS(ndb.latitude);
+        var lng = Geo.parseDMS(ndb.longitude);
+
+        var point = Geo.fromLatLngToPoint(lat, lng, 1);
+
+        var elem = new CES.Entity();
+        elem.addComponent(new PositionComponent(point.x, point.y));
+        elem.addComponent(new ShapeComponent({
+          type: 'rect',
+          width: 3,
+          height: 3,
+          fillColor: '#0f0',
+          strokeColor: '#0f0'
+        }, _stage));
+
+        _world.addEntity(elem);
       });
     });
-
-    _stage = new createjs.Stage('stage');
-    window._stage = _stage;
-
-    var plane = new CES.Entity();
-    plane.addComponent(new PositionComponent(0, 0));
-    plane.addComponent(new VelocityComponent(1, 1));
-    plane.addComponent(new ShapeComponent({
-      type: 'rect',
-      width: 5,
-      height: 5,
-      fillColor: '#fff',
-      strokeColor: '#000'
-    }, _stage));
-
-    var plane2 = new CES.Entity();
-    plane2.addComponent(new PositionComponent(50, 50));
-    plane2.addComponent(new VelocityComponent(1, 2));
-    plane2.addComponent(new ShapeComponent({
-      type: 'rect',
-      width: 5,
-      height: 5,
-      fillColor: '#fff',
-      strokeColor: '#000'
-    }, _stage));
-
-    _world = new CES.World();
-    _world.addEntity(plane);
-    _world.addEntity(plane2);
-    _world.addSystem(new PhysicSystem());
-    _world.addSystem(new RenderSystem());
-
-    _stage.update();
 
     createjs.Ticker.addEventListener('tick', handleTick);
   }

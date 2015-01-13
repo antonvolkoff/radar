@@ -24,3 +24,17 @@ name      = "AFFLIGEM"
 frequency = 114.900
 latitude  = "N050.54.28.001"
 longitude = "E004.08.20.000"
+
+[[ndbs]]
+code      = "AMB"
+name      = "AMBOISE"
+frequency = 341.000
+latitude  = "N047.25.05.401"
+longitude = "E001.02.27.600"
+
+[[ndbs]]
+code      = "AVD"
+name      = "AVORD"
+frequency = 288.500
+latitude  = "N047.07.14.401"
+longitude = "E002.47.58.600"
