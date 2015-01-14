@@ -2,6 +2,7 @@ var fs = require('fs');
 var toml = require('toml');
 var Geo = require('./helpers/geo');
 var CES = require('ces');
+
 var PositionComponent = require('./components/position_component');
 var VelocityComponent = require('./components/velocity_component');
 var ShapeComponent = require('./components/shape_component');
@@ -21,10 +22,6 @@ var setupCanvas = function() {
   stageElem.setAttribute('height',screenHeight + 'px');
 };
 
-var handleTick = function() {
-  _world.update(_stage);
-};
-
 var loadSector = function(callback) {
   fs.readFile('example.toml', function(err, data) {
     if (err) {
@@ -40,8 +37,6 @@ var loadSector = function(callback) {
 var App = {
   start: function() {
     setupCanvas();
-
-    _stage = new createjs.Stage('stage');
     
     _world = new CES.World();
     _world.addSystem(new PhysicSystem());
@@ -56,13 +51,7 @@ var App = {
 
         var elem = new CES.Entity();
         elem.addComponent(new PositionComponent(point.x, point.y));
-        elem.addComponent(new ShapeComponent({
-          type: 'rect',
-          width: 3,
-          height: 3,
-          fillColor: '#f00',
-          strokeColor: '#f00'
-        }, _stage));
+        elem.addComponent(new ShapeComponent('vor'));
 
         _world.addEntity(elem);
       });
@@ -75,24 +64,31 @@ var App = {
 
         var elem = new CES.Entity();
         elem.addComponent(new PositionComponent(point.x, point.y));
-        elem.addComponent(new ShapeComponent({
-          type: 'rect',
-          width: 3,
-          height: 3,
-          fillColor: '#0f0',
-          strokeColor: '#0f0'
-        }, _stage));
+        elem.addComponent(new ShapeComponent('ndb'));
 
         _world.addEntity(elem);
       });
 
       data.artccs.forEach(function(artcc) {
+        var points = [];
+
+        artcc.points.forEach(function(point) {
+          var lat = Geo.parseDMS(point[0]);
+          var lng = Geo.parseDMS(point[1]);
+
+          var point = Geo.fromLatLngToPoint(lat, lng, 1);
+
+          points.push(point);
+        });
+
         var entity = new CES.Entity();
+
+        // entity.addComponent(new MultiPositionComponent(points));
+        entity.addComponent(new ShapeComponent('artcc'));
+
         _world.addEntity(entity);
       });
     });
-
-    createjs.Ticker.addEventListener('tick', handleTick);
   }
 };
 
