@@ -89,6 +89,10 @@ var App = {
         _world.addEntity(entity);
       });
     });
+
+    while (true) {
+      _world.update(0.2);
+    }
   }
 };
 
