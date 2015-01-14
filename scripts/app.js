@@ -85,6 +85,11 @@ var App = {
 
         _world.addEntity(elem);
       });
+
+      data.artccs.forEach(function(artcc) {
+        var entity = new CES.Entity();
+        _world.addEntity(entity);
+      });
     });
 
     createjs.Ticker.addEventListener('tick', handleTick);
