@@ -126,6 +126,23 @@ var App = {
           sector.addEntity(entity);
         });
       };
+
+      if (data.artccs_high != undefined && data.artccs_high.length > 0) {
+        data.artccs_high.forEach(function(artcc) {
+          var entity = new CES.Entity();
+          
+          entity.addComponent(new LabelComponent(artcc.name));
+          entity.addComponent(new AppearenceComponent('artcc'));
+
+          var points = [];
+          artcc.points.forEach(function(point) {
+            points.push({lat: point[0], lng: point[1]});
+          });
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });
+      };
     });
 
     setInterval(handleTick, 1000 / TARGET_FPS);
