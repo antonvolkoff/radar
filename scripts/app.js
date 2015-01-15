@@ -1,11 +1,19 @@
+var fs = require('fs');
+var toml = require('toml');
+var Geo = require('./helpers/geo');
 var CES = require('ces');
-var PositionComponent = require('./components/position_component');
-var VelocityComponent = require('./components/velocity_component');
-var ShapeComponent = require('./components/shape_component');
-var PhysicSystem = require('./systems/physic_system');
+
+var CodeComponent = require('./components/code_component');
+var LabelComponent = require('./components/label_component');
+var FrequencyComponent = require('./components/frequency_component');
+var CoordinatesComponent = require('./components/coordinates_component');
+var AppearenceComponent = require('./components/appearence_component');
+
 var RenderSystem = require('./systems/render_system');
 
-var _stage, _world;
+var TARGET_FPS = 20;
+var sector = null;
+var center = { lat: 0, lng: 0};
 
 var setupCanvas = function() {
   // Get browser dimentions
@@ -18,48 +26,126 @@ var setupCanvas = function() {
   stageElem.setAttribute('height',screenHeight + 'px');
 };
 
+var loadSector = function(callback) {
+  fs.readFile('example.toml', function(err, data) {
+    if (err) {
+      console.log(err);
+      return;
+    };
+
+    var parsed = toml.parse(data);
+    callback(parsed);
+  });
+};
+
 var handleTick = function() {
-  _world.update(_stage);
+  sector.update({
+    zoom: 7,
+    dt: 1000 / TARGET_FPS,
+    center: center,
+    render: true
+  });
 };
 
 var App = {
   start: function() {
     setupCanvas();
+    
+    sector = new CES.World();
+    sector.addSystem(new RenderSystem());
+    window.sector = sector;
 
-    _stage = new createjs.Stage('stage');
-    window._stage = _stage;
+    loadSector(function(data) {
+      { // Set center
+        center.lat = Geo.parseDMS(data.info.center_latitude);
+        center.lng = Geo.parseDMS(data.info.center_longitude);
+      }
 
-    var plane = new CES.Entity();
-    plane.addComponent(new PositionComponent(0, 0));
-    plane.addComponent(new VelocityComponent(1, 1));
-    plane.addComponent(new ShapeComponent({
-      type: 'rect',
-      width: 5,
-      height: 5,
-      fillColor: '#fff',
-      strokeColor: '#000'
-    }, _stage));
+      if (data.vors != undefined && data.vors.length > 0) {
+        data.vors.forEach(function(vor) {
+          var entity = new CES.Entity();
 
-    var plane2 = new CES.Entity();
-    plane2.addComponent(new PositionComponent(50, 50));
-    plane2.addComponent(new VelocityComponent(1, 2));
-    plane2.addComponent(new ShapeComponent({
-      type: 'rect',
-      width: 5,
-      height: 5,
-      fillColor: '#fff',
-      strokeColor: '#000'
-    }, _stage));
+          entity.addComponent(new CodeComponent(vor.code));
+          entity.addComponent(new LabelComponent(vor.name));
+          entity.addComponent(new FrequencyComponent(vor.frequency));
+          entity.addComponent(new AppearenceComponent('vor'));
+          
+          var points = [{lat: vor.latitude, lng: vor.longitude}];
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });  
+      };
+      
+      if (data.ndbs != undefined && data.ndbs.length > 0) {
+        data.ndbs.forEach(function(ndb) {
+          var entity = new CES.Entity();
 
-    _world = new CES.World();
-    _world.addEntity(plane);
-    _world.addEntity(plane2);
-    _world.addSystem(new PhysicSystem());
-    _world.addSystem(new RenderSystem());
+          entity.addComponent(new CodeComponent(ndb.code));
+          entity.addComponent(new LabelComponent(ndb.name));
+          entity.addComponent(new FrequencyComponent(ndb.frequency));
+          entity.addComponent(new AppearenceComponent('ndb'));
+          
+          var points = [{lat: ndb.latitude, lng: ndb.longitude}];
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });
+      };
 
-    _stage.update();
+      if (data.artccs != undefined && data.artccs.length > 0) {
+        data.artccs.forEach(function(artcc) {
+          var entity = new CES.Entity();
+          
+          entity.addComponent(new LabelComponent(artcc.name));
+          entity.addComponent(new AppearenceComponent('artcc'));
 
-    createjs.Ticker.addEventListener('tick', handleTick);
+          var points = [];
+          artcc.points.forEach(function(point) {
+            points.push({lat: point[0], lng: point[1]});
+          });
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });
+      };
+
+      if (data.artccs_low != undefined && data.artccs_low.length > 0) {
+        data.artccs_low.forEach(function(artcc) {
+          var entity = new CES.Entity();
+          
+          entity.addComponent(new LabelComponent(artcc.name));
+          entity.addComponent(new AppearenceComponent('artcc'));
+
+          var points = [];
+          artcc.points.forEach(function(point) {
+            points.push({lat: point[0], lng: point[1]});
+          });
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });
+      };
+
+      if (data.artccs_high != undefined && data.artccs_high.length > 0) {
+        data.artccs_high.forEach(function(artcc) {
+          var entity = new CES.Entity();
+          
+          entity.addComponent(new LabelComponent(artcc.name));
+          entity.addComponent(new AppearenceComponent('artcc'));
+
+          var points = [];
+          artcc.points.forEach(function(point) {
+            points.push({lat: point[0], lng: point[1]});
+          });
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });
+      };
+    });
+
+    setInterval(handleTick, 1000 / TARGET_FPS);
   }
 };
 
