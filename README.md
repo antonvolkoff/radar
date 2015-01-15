@@ -11,7 +11,7 @@
 
 1. CoordinatesComponent
 2. AppearenceComponent
-3. NameComponent
+3. LabelComponent (Name)
 4. CodeComponent
 5. FrequencyComponent
 6. ColorComponent
@@ -24,22 +24,22 @@
 
 1. VOR
   * CodeComponent
-  * NameComponent
+  * LabelComponent
   * FrequencyComponent
   * AppearenceComponent
   * CoordinatesComponent
 2. NDB
   * CodeComponent
-  * NameComponent
+  * LabelComponent
   * FrequencyComponent
   * AppearenceComponent
   * CoordinatesComponent
 3. ARTCC / ARTCC LOW / ARTCC HIGH
-  * NameComponent
+  * LabelComponent
   * CoordinatesComponent
   * AppearenceComponent
 4. GEO
-  * NameComponent
+  * LabelComponent
   * CoordinatesComponent
   * AppearenceComponent
   * ColorComponent

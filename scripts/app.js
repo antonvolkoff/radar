@@ -3,12 +3,8 @@ var toml = require('toml');
 var Geo = require('./helpers/geo');
 var CES = require('ces');
 
-// var PositionComponent = require('./components/position_component');
-// var VelocityComponent = require('./components/velocity_component');
-// var ShapeComponent = require('./components/shape_component');
-// var PhysicSystem = require('./systems/physic_system');
-// var RenderSystem = require('./systems/render_system');
 var CodeComponent = require('./components/code_component');
+var LabelComponent = require('./components/label_component');
 
 var sector = null;
 
@@ -41,6 +37,8 @@ var App = {
     
     sector = new CES.World();
     window.sector = sector;
+
+    // Add systems
     // sector.addSystem(new PhysicSystem());
     // sector.addSystem(new RenderSystem());
 
@@ -48,6 +46,7 @@ var App = {
       data.vors.forEach(function(vor) {
         var entity = new CES.Entity();
         entity.addComponent(new CodeComponent(vor.code));
+        entity.addComponent(new LabelComponent(vor.name));
         sector.addEntity(entity);
         // var lat = Geo.parseDMS(vor.latitude);
         // var lng = Geo.parseDMS(vor.longitude);
@@ -64,6 +63,7 @@ var App = {
       data.ndbs.forEach(function(ndb) {
         var entity = new CES.Entity();
         entity.addComponent(new CodeComponent(ndb.code));
+        entity.addComponent(new LabelComponent(ndb.name));
         sector.addEntity(entity);
         // var lat = Geo.parseDMS(ndb.latitude);
         // var lng = Geo.parseDMS(ndb.longitude);
@@ -79,6 +79,7 @@ var App = {
 
       data.artccs.forEach(function(artcc) {
         var entity = new CES.Entity();
+        entity.addComponent(new LabelComponent(artcc.name));
         sector.addEntity(entity);
         // var points = [];
 
