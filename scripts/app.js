@@ -8,6 +8,9 @@ var LabelComponent = require('./components/label_component');
 var FrequencyComponent = require('./components/frequency_component');
 var CoordinatesComponent = require('./components/coordinates_component');
 
+var RenderSystem = require('./systems/render_system');
+
+var TARGET_FPS = 20;
 var sector = null;
 
 var setupCanvas = function() {
@@ -33,11 +36,16 @@ var loadSector = function(callback) {
   });
 };
 
+var handleTick = function() {
+  sector.update(1000 / TARGET_FPS);
+};
+
 var App = {
   start: function() {
     setupCanvas();
     
     sector = new CES.World();
+    sector.addSystem(new RenderSystem());
     window.sector = sector;
 
     loadSector(function(data) {
@@ -81,6 +89,8 @@ var App = {
         sector.addEntity(entity);
       });
     });
+
+    setInterval(handleTick, 1000 / TARGET_FPS);
   }
 };
 
