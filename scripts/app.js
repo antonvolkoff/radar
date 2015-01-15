@@ -40,7 +40,7 @@ var loadSector = function(callback) {
 
 var handleTick = function() {
   sector.update({
-    zoom: 5,
+    zoom: 8,
     dt: 1000 / TARGET_FPS,
     center: center,
     render: true
@@ -95,6 +95,23 @@ var App = {
 
       if (data.artccs != undefined && data.artccs.length > 0) {
         data.artccs.forEach(function(artcc) {
+          var entity = new CES.Entity();
+          
+          entity.addComponent(new LabelComponent(artcc.name));
+          entity.addComponent(new AppearenceComponent('artcc'));
+
+          var points = [];
+          artcc.points.forEach(function(point) {
+            points.push({lat: point[0], lng: point[1]});
+          });
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });
+      };
+
+      if (data.artccs_low != undefined && data.artccs_low.length > 0) {
+        data.artccs_low.forEach(function(artcc) {
           var entity = new CES.Entity();
           
           entity.addComponent(new LabelComponent(artcc.name));
