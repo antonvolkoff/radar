@@ -11,6 +11,20 @@ nm_longitude        = 30.9
 magnetic_variation  = -7.0
 scaling_factor      = 1.0
 
+[[vors]]
+code =      "SPB"
+name =      "St. Peterburg"
+frequancy = 113.400
+latitude =  "N059.48.25.099"
+longitude = "E030.16.28.884"
+
+[[vors]]
+code =      "WKL"
+name =      "Velikiye Luki"
+frequancy = 108.200
+latitude =  "N056.22.46.002"
+longitude = "E030.36.23.976"
+
 [[artccs]]
 name = "ULLL_CTR"
 points = [

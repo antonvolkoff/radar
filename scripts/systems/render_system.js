@@ -37,6 +37,13 @@ var RenderSystem = CES.System.extend({
 
         ctx.stroke();
       };
+
+      if (appearence.type == 'vor') {
+        var point = Geo.fromLatLngToPoint(
+          coordinates.points[0].lat, coordinates.points[0].lng, params.zoom);
+
+        ctx.fillRect(point.x, point.y, 5, 5);
+      };
     });
 
     ctx.translate(offset.x, offset.y);
