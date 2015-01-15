@@ -1,6 +1,12 @@
 var CES = require('ces');
 var Geo = require('../helpers/geo');
 
+var colors = {
+  background: '#1d1f21',
+  line: '#c5c8c6',
+  navaid: '#b5bd68'
+}
+
 var RenderSystem = CES.System.extend({
   update: function(params) {
     var entities = this.world.getEntities('appearence');
@@ -10,6 +16,14 @@ var RenderSystem = CES.System.extend({
     var offset = { x: center.x - canvas.width / 2, y: center.y - canvas.height / 2 };
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    { // Set background
+      ctx.save();
+      ctx.fillStyle = colors.background;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
+    }
+
     ctx.translate(-offset.x, -offset.y);
 
     entities.forEach(function(entity) {
@@ -23,6 +37,8 @@ var RenderSystem = CES.System.extend({
           points.push(Geo.fromLatLngToPoint(point.lat, point.lng, params.zoom));
         });
 
+        ctx.save();
+        ctx.strokeStyle = colors.line;
         ctx.beginPath();
 
         for (var i = 0; i < points.length; i++) {
@@ -36,13 +52,17 @@ var RenderSystem = CES.System.extend({
         };
 
         ctx.stroke();
+        ctx.restore();
       };
 
       if (appearence.type == 'vor') {
         var point = Geo.fromLatLngToPoint(
           coordinates.points[0].lat, coordinates.points[0].lng, params.zoom);
 
+        ctx.save();
+        ctx.fillStyle = colors.navaid;
         ctx.fillRect(point.x, point.y, 5, 5);
+        ctx.restore();
       };
 
       if (appearence.type == 'ndb') {
@@ -50,7 +70,7 @@ var RenderSystem = CES.System.extend({
           coordinates.points[0].lat, coordinates.points[0].lng, params.zoom);
 
         ctx.save();
-        ctx.fillStyle = '#f00';
+        ctx.fillStyle = colors.navaid;
         ctx.fillRect(point.x, point.y, 5, 5);
         ctx.restore();
       };

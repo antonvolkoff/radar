@@ -40,7 +40,7 @@ var loadSector = function(callback) {
 
 var handleTick = function() {
   sector.update({
-    zoom: 8,
+    zoom: 7,
     dt: 1000 / TARGET_FPS,
     center: center,
     render: true
