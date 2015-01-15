@@ -42,7 +42,8 @@ var handleTick = function() {
   sector.update({
     zoom: 5,
     dt: 1000 / TARGET_FPS,
-    center: center
+    center: center,
+    render: true
   });
 };
 

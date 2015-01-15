@@ -44,6 +44,16 @@ var RenderSystem = CES.System.extend({
 
         ctx.fillRect(point.x, point.y, 5, 5);
       };
+
+      if (appearence.type == 'ndb') {
+        var point = Geo.fromLatLngToPoint(
+          coordinates.points[0].lat, coordinates.points[0].lng, params.zoom);
+
+        ctx.save();
+        ctx.fillStyle = '#f00';
+        ctx.fillRect(point.x, point.y, 5, 5);
+        ctx.restore();
+      };
     });
 
     ctx.translate(offset.x, offset.y);

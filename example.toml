@@ -11,6 +11,9 @@ nm_longitude        = 30.9
 magnetic_variation  = -7.0
 scaling_factor      = 1.0
 
+################################################################################
+### VORs
+
 [[vors]]
 code =      "SPB"
 name =      "St. Peterburg"
@@ -24,6 +27,144 @@ name =      "Velikiye Luki"
 frequancy = 108.200
 latitude =  "N056.22.46.002"
 longitude = "E030.36.23.976"
+
+################################################################################
+### NDBs
+
+#K     700.000 N059.48.09.299 E030.12.01.296 ;PULKOVO ST PETERSBURG
+[[ndbs]]
+code =      "K"
+name =      "PULKOVO ST PETERSBURG"
+frequancy = 700.000
+latitude =  "N059.48.09.299"
+longitude = "E030.12.01.296"
+
+#L     960.000 N059.47.55.302 E030.19.12.792 ;PULKOVO ST PETERSBURG
+[[ndbs]]
+code =      "L"
+name =      "PULKOVO ST PETERSBURG"
+frequancy = 960.000
+latitude =  "N059.47.55.302"
+longitude = "E030.19.12.792"
+
+#N     620.000 N057.48.06.001 E028.24.29.988 ;PSKOV
+#NP    300.000 N057.49.36.001 E028.25.17.976 ;PSKOV
+#O     572.000 N059.47.16.199 E030.17.59.100 ;PULKOVO ST PETERSBURG
+#P     620.000 N057.45.54.000 E028.23.11.976 ;PSKOV
+#PK    300.000 N057.44.12.001 E028.22.05.988 ;PSKOV
+#PK    342.000 N059.48.37.001 E030.08.53.988 ;PULKOVO ST PETERSBURG
+#PL    525.000 N059.47.27.499 E030.22.19.380 ;PULKOVO ST PETERSBURG
+#PO    277.000 N059.46.50.502 E030.20.51.288 ;ST PETERSBURG
+#PU    303.000 N059.49.14.401 E030.10.17.076 ;PULKOVO ST PETERSBURG
+#Q     645.000 N061.54.17.201 E034.10.21.288 ;BESOVETS PETROZAVODSK
+#QD    340.000 N061.56.18.600 E034.12.11.700 ;BESOVETS PETROZAVODSK
+#U     625.000 N059.48.44.802 E030.13.36.696 ;PULKOVO ST PETERSBURG
+#X     645.000 N061.51.59.400 E034.08.15.900 ;BESOVETS PETROZAVODSK
+#XO    340.000 N061.49.11.100 E034.05.46.068 ;BESOVETS PETROZAVODSK
+
+[[ndbs]]
+code =      "PT"
+name =      ""
+frequancy = 1010.000
+latitude =  "N061.53.42.000"
+longitude = "E034.05.12.000"
+
+[[ndbs]]
+code =      "KM"
+name =      ""
+frequancy = 445.000
+latitude =  "N064.56.48.000"
+longitude = "E034.29.48.000"
+
+[[ndbs]]
+code =      "SU"
+name =      ""
+frequancy = 791.000
+latitude =  "N060.02.00.000"
+longitude = "E037.45.00.000"
+
+#DB    375     N057.43.00.000 E034.58.00.000
+[[ndbs]]
+code =      "DB"
+name =      ""
+frequancy = 375.000
+latitude =  "N057.43.00.000"
+longitude = "E034.58.00.000"
+
+#BD    360     N057.06.00.000 E037.43.00.000
+[[ndbs]]
+code =      "BD"
+name =      ""
+frequancy = 360.000
+latitude =  "N057.06.00.000"
+longitude = "E037.43.00.000"
+
+#NE    900     N057.02.00.000 E038.00.00.000
+[[ndbs]]
+code =      "NE"
+name =      ""
+frequancy = 900.000
+latitude =  "N057.02.00.000"
+longitude = "E038.00.00.000"
+
+#AJ    430     N056.31.00.000 E034.56.00.000
+[[ndbs]]
+code =      "AJ"
+name =      ""
+frequancy = 430.000
+latitude =  "N056.31.00.000"
+longitude = "E034.56.00.000"
+
+#TU    1290    N055.51.00.000 E032.56.00.000
+[[ndbs]]
+code =      "TU"
+name =      ""
+frequancy = 1290.000
+latitude =  "N055.51.00.000"
+longitude = "E032.56.00.000"
+
+#PE    906     N057.49.00.000 E027.36.00.000
+[[ndbs]]
+code =      "PE"
+name =      ""
+frequancy = 906.000
+latitude =  "N057.49.00.000"
+longitude = "E027.36.00.000"
+
+#NP    300     N057.49.49.245 E028.25.16.525
+[[ndbs]]
+code =      "NP"
+name =      ""
+frequancy = 300.000
+latitude =  "N057.49.49.245"
+longitude = "E028.25.16.525"
+
+#N     620     N057.48.05.000 E028.24.29.000
+[[ndbs]]
+code =      "N"
+name =      ""
+frequancy = 620.000
+latitude =  "N057.48.05.000"
+longitude = "E028.24.29.000"
+
+#PK    300     N057.44.12.000 E028.22.06.000
+[[ndbs]]
+code =      "PK"
+name =      ""
+frequancy = 300.000
+latitude =  "N057.44.12.000"
+longitude = "E028.22.06.000"
+
+#P     620     N057.45.53.000 E028.23.12.000
+[[ndbs]]
+code =      "P"
+name =      ""
+frequancy = 620.000
+latitude =  "N057.45.53.000"
+longitude = "E028.23.12.000"
+
+################################################################################
+### ARTCCs
 
 [[artccs]]
 name = "ULLL_CTR"
