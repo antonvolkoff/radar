@@ -40,7 +40,7 @@ var loadSector = function(callback) {
 
 var handleTick = function() {
   sector.update({
-    zoom: 7,
+    zoom: 6,
     dt: 1000 / TARGET_FPS,
     center: center
   });
@@ -60,48 +60,54 @@ var App = {
         center.lng = Geo.parseDMS(data.info.center_longitude);
       }
 
-      data.vors.forEach(function(vor) {
-        var entity = new CES.Entity();
+      if (data.vors != undefined && data.vors.length > 0) {
+        data.vors.forEach(function(vor) {
+          var entity = new CES.Entity();
 
-        entity.addComponent(new CodeComponent(vor.code));
-        entity.addComponent(new LabelComponent(vor.name));
-        entity.addComponent(new FrequencyComponent(vor.frequency));
-        entity.addComponent(new AppearenceComponent('vor'));
-        
-        var points = [{lat: vor.latitude, lng: vor.longitude}];
-        entity.addComponent(new CoordinatesComponent(points));
-        
-        sector.addEntity(entity);
-      });
+          entity.addComponent(new CodeComponent(vor.code));
+          entity.addComponent(new LabelComponent(vor.name));
+          entity.addComponent(new FrequencyComponent(vor.frequency));
+          entity.addComponent(new AppearenceComponent('vor'));
+          
+          var points = [{lat: vor.latitude, lng: vor.longitude}];
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });  
+      };
+      
+      if (data.ndbs != undefined && data.ndbs.length > 0) {
+        data.ndbs.forEach(function(ndb) {
+          var entity = new CES.Entity();
 
-      data.ndbs.forEach(function(ndb) {
-        var entity = new CES.Entity();
-
-        entity.addComponent(new CodeComponent(ndb.code));
-        entity.addComponent(new LabelComponent(ndb.name));
-        entity.addComponent(new FrequencyComponent(ndb.frequency));
-        entity.addComponent(new AppearenceComponent('ndb'));
-        
-        var points = [{lat: ndb.latitude, lng: ndb.longitude}];
-        entity.addComponent(new CoordinatesComponent(points));
-        
-        sector.addEntity(entity);
-      });
-
-      data.artccs.forEach(function(artcc) {
-        var entity = new CES.Entity();
-        
-        entity.addComponent(new LabelComponent(artcc.name));
-        entity.addComponent(new AppearenceComponent('artcc'));
-
-        var points = [];
-        artcc.points.forEach(function(point) {
-          points.push({lat: point[0], lng: point[1]});
+          entity.addComponent(new CodeComponent(ndb.code));
+          entity.addComponent(new LabelComponent(ndb.name));
+          entity.addComponent(new FrequencyComponent(ndb.frequency));
+          entity.addComponent(new AppearenceComponent('ndb'));
+          
+          var points = [{lat: ndb.latitude, lng: ndb.longitude}];
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
         });
-        entity.addComponent(new CoordinatesComponent(points));
-        
-        sector.addEntity(entity);
-      });
+      };
+
+      if (data.artccs != undefined && data.artccs.length > 0) {
+        data.artccs.forEach(function(artcc) {
+          var entity = new CES.Entity();
+          
+          entity.addComponent(new LabelComponent(artcc.name));
+          entity.addComponent(new AppearenceComponent('artcc'));
+
+          var points = [];
+          artcc.points.forEach(function(point) {
+            points.push({lat: point[0], lng: point[1]});
+          });
+          entity.addComponent(new CoordinatesComponent(points));
+          
+          sector.addEntity(entity);
+        });
+      };
     });
 
     setInterval(handleTick, 1000 / TARGET_FPS);
