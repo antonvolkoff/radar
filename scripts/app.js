@@ -13,6 +13,7 @@ var RenderSystem = require('./systems/render_system');
 
 var TARGET_FPS = 20;
 var sector = null;
+var center = { lat: 0, lng: 0};
 
 var setupCanvas = function() {
   // Get browser dimentions
@@ -39,8 +40,9 @@ var loadSector = function(callback) {
 
 var handleTick = function() {
   sector.update({
-    zoom: 2,
-    dt: 1000 / TARGET_FPS
+    zoom: 7,
+    dt: 1000 / TARGET_FPS,
+    center: center
   });
 };
 
@@ -53,6 +55,11 @@ var App = {
     window.sector = sector;
 
     loadSector(function(data) {
+      { // Set center
+        center.lat = Geo.parseDMS(data.info.center_latitude);
+        center.lng = Geo.parseDMS(data.info.center_longitude);
+      }
+
       data.vors.forEach(function(vor) {
         var entity = new CES.Entity();
 
