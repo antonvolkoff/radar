@@ -53,7 +53,7 @@ var Geo = {
         dd = dd * -1;
     } // Don't do anything for N or E
 
-    return dd.toFixed(6);
+    return parseFloat(dd.toFixed(6));
   },
 
   parseDMS: function(val) {
