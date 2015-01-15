@@ -5,6 +5,7 @@ var CES = require('ces');
 
 var CodeComponent = require('./components/code_component');
 var LabelComponent = require('./components/label_component');
+var FrequencyComponent = require('./components/frequency_component');
 
 var sector = null;
 
@@ -47,6 +48,7 @@ var App = {
         var entity = new CES.Entity();
         entity.addComponent(new CodeComponent(vor.code));
         entity.addComponent(new LabelComponent(vor.name));
+        entity.addComponent(new FrequencyComponent(vor.frequency));
         sector.addEntity(entity);
         // var lat = Geo.parseDMS(vor.latitude);
         // var lng = Geo.parseDMS(vor.longitude);
@@ -64,6 +66,7 @@ var App = {
         var entity = new CES.Entity();
         entity.addComponent(new CodeComponent(ndb.code));
         entity.addComponent(new LabelComponent(ndb.name));
+        entity.addComponent(new FrequencyComponent(ndb.frequency));
         sector.addEntity(entity);
         // var lat = Geo.parseDMS(ndb.latitude);
         // var lng = Geo.parseDMS(ndb.longitude);
