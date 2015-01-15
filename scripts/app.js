@@ -3,13 +3,14 @@ var toml = require('toml');
 var Geo = require('./helpers/geo');
 var CES = require('ces');
 
-var PositionComponent = require('./components/position_component');
-var VelocityComponent = require('./components/velocity_component');
-var ShapeComponent = require('./components/shape_component');
-var PhysicSystem = require('./systems/physic_system');
-var RenderSystem = require('./systems/render_system');
+// var PositionComponent = require('./components/position_component');
+// var VelocityComponent = require('./components/velocity_component');
+// var ShapeComponent = require('./components/shape_component');
+// var PhysicSystem = require('./systems/physic_system');
+// var RenderSystem = require('./systems/render_system');
+var CodeComponent = require('./components/code_component');
 
-var _stage, _world;
+var sector = null;
 
 var setupCanvas = function() {
   // Get browser dimentions
@@ -38,61 +39,70 @@ var App = {
   start: function() {
     setupCanvas();
     
-    _world = new CES.World();
-    _world.addSystem(new PhysicSystem());
-    _world.addSystem(new RenderSystem());
+    sector = new CES.World();
+    window.sector = sector;
+    // sector.addSystem(new PhysicSystem());
+    // sector.addSystem(new RenderSystem());
 
     loadSector(function(data) {
       data.vors.forEach(function(vor) {
-        var lat = Geo.parseDMS(vor.latitude);
-        var lng = Geo.parseDMS(vor.longitude);
+        var entity = new CES.Entity();
+        entity.addComponent(new CodeComponent(vor.code));
+        sector.addEntity(entity);
+        // var lat = Geo.parseDMS(vor.latitude);
+        // var lng = Geo.parseDMS(vor.longitude);
 
-        var point = Geo.fromLatLngToPoint(lat, lng, 2);
+        // var point = Geo.fromLatLngToPoint(lat, lng, 2);
 
-        var elem = new CES.Entity();
-        elem.addComponent(new PositionComponent(point.x, point.y));
-        elem.addComponent(new ShapeComponent('vor'));
+        // var elem = new CES.Entity();
+        // elem.addComponent(new PositionComponent(point.x, point.y));
+        // elem.addComponent(new ShapeComponent('vor'));
 
-        _world.addEntity(elem);
+        // sector.addEntity(elem);
       });
 
       data.ndbs.forEach(function(ndb) {
-        var lat = Geo.parseDMS(ndb.latitude);
-        var lng = Geo.parseDMS(ndb.longitude);
+        var entity = new CES.Entity();
+        entity.addComponent(new CodeComponent(ndb.code));
+        sector.addEntity(entity);
+        // var lat = Geo.parseDMS(ndb.latitude);
+        // var lng = Geo.parseDMS(ndb.longitude);
 
-        var point = Geo.fromLatLngToPoint(lat, lng, 1);
+        // var point = Geo.fromLatLngToPoint(lat, lng, 1);
 
-        var elem = new CES.Entity();
-        elem.addComponent(new PositionComponent(point.x, point.y));
-        elem.addComponent(new ShapeComponent('ndb'));
+        // var elem = new CES.Entity();
+        // elem.addComponent(new PositionComponent(point.x, point.y));
+        // elem.addComponent(new ShapeComponent('ndb'));
 
-        _world.addEntity(elem);
+        // sector.addEntity(elem);
       });
 
       data.artccs.forEach(function(artcc) {
-        var points = [];
-
-        artcc.points.forEach(function(point) {
-          var lat = Geo.parseDMS(point[0]);
-          var lng = Geo.parseDMS(point[1]);
-
-          var point = Geo.fromLatLngToPoint(lat, lng, 1);
-
-          points.push(point);
-        });
-
         var entity = new CES.Entity();
+        sector.addEntity(entity);
+        // var points = [];
 
-        // entity.addComponent(new MultiPositionComponent(points));
-        entity.addComponent(new ShapeComponent('artcc'));
+        // artcc.points.forEach(function(point) {
+        //   var lat = Geo.parseDMS(point[0]);
+        //   var lng = Geo.parseDMS(point[1]);
 
-        _world.addEntity(entity);
+        //   var point = Geo.fromLatLngToPoint(lat, lng, 1);
+
+        //   points.push(point);
+        // });
+
+        // var entity = new CES.Entity();
+
+        // // entity.addComponent(new MultiPositionComponent(points));
+        // entity.addComponent(new ShapeComponent('artcc'));
+
+        // sector.addEntity(entity);
       });
     });
 
-    while (true) {
-      _world.update(0.2);
-    }
+    // while (true) {
+    //   sector.update(0.2);
+    // }
   }
 };
 
