@@ -7,6 +7,7 @@ var CodeComponent = require('./components/code_component');
 var LabelComponent = require('./components/label_component');
 var FrequencyComponent = require('./components/frequency_component');
 var CoordinatesComponent = require('./components/coordinates_component');
+var AppearenceComponent = require('./components/appearence_component');
 
 var RenderSystem = require('./systems/render_system');
 
@@ -37,7 +38,10 @@ var loadSector = function(callback) {
 };
 
 var handleTick = function() {
-  sector.update(1000 / TARGET_FPS);
+  sector.update({
+    zoom: 2,
+    dt: 1000 / TARGET_FPS
+  });
 };
 
 var App = {
@@ -55,6 +59,7 @@ var App = {
         entity.addComponent(new CodeComponent(vor.code));
         entity.addComponent(new LabelComponent(vor.name));
         entity.addComponent(new FrequencyComponent(vor.frequency));
+        entity.addComponent(new AppearenceComponent('vor'));
         
         var points = [{lat: vor.latitude, lng: vor.longitude}];
         entity.addComponent(new CoordinatesComponent(points));
@@ -68,6 +73,7 @@ var App = {
         entity.addComponent(new CodeComponent(ndb.code));
         entity.addComponent(new LabelComponent(ndb.name));
         entity.addComponent(new FrequencyComponent(ndb.frequency));
+        entity.addComponent(new AppearenceComponent('ndb'));
         
         var points = [{lat: ndb.latitude, lng: ndb.longitude}];
         entity.addComponent(new CoordinatesComponent(points));
@@ -79,6 +85,7 @@ var App = {
         var entity = new CES.Entity();
         
         entity.addComponent(new LabelComponent(artcc.name));
+        entity.addComponent(new AppearenceComponent('artcc'));
 
         var points = [];
         artcc.points.forEach(function(point) {
