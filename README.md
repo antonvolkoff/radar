@@ -43,3 +43,16 @@
   * CoordinatesComponent
   * AppearenceComponent
   * ColorComponent
+
+
+## Idea
+
+If I'm going to be working directly with SVG than handling and rendering is 
+better to be handled by architecture like React. As the state of elements is 
+constant and should not be re-rendered unless it's required.
+NOTE: I need to look for something like React to render SVG.
+
+If I'am going to use canvas than using ECS architecture makes total sense, 
+because sector has to be rendered every frame and makes it very convinient 
+and fast to develop.
+NOTE: I need to look how hard is it to handle clicks for canvas.
